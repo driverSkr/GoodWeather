@@ -1,7 +1,5 @@
 package com.driverskr.library.network;
 
-import android.content.Intent;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

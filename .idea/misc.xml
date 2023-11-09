@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.225" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_add_32.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_check_24.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_close_24.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_splash.xml" value="0.22447916666666667" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_daily_rv.xml" value="0.264" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_lifestyle_rv.xml" value="0.10065590312815338" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/menu/menu_main.xml" value="0.15185185185185185" />
       </map>
     </option>
   </component>

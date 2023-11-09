@@ -1,12 +1,13 @@
 package com.driverskr.library.network.errorhandler;
 
+import android.net.ParseException;
+
 import com.google.gson.JsonParseException;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 
 import java.net.ConnectException;
-import java.text.ParseException;
 
 import retrofit2.HttpException;
 

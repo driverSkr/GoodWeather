@@ -5,7 +5,7 @@ import androidx.viewbinding.ViewBinding;
 /**
  * @Author: driverSkr
  * @Time: 2023/11/8 18:43
- * @Description: 网络请求$
+ * @Description: 访问网络的Activity$
  */
 public abstract class NetworkActivity<VB extends ViewBinding> extends BaseVBActivity<VB> {
 

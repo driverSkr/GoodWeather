@@ -19,13 +19,13 @@ public abstract class BaseObserver<T> implements Observer<T> {
     //继续
     @Override
     public void onNext(T t) {
-
+        onSuccess(t);
     }
 
     //异常
     @Override
     public void onError(Throwable e) {
-
+        onFailure(e);
     }
 
     //完成

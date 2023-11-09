@@ -1,13 +1,12 @@
 package com.driverskr.library.network.errorhandler;
 
-
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 /**
  * @Author: driverSkr
  * @Time: 2023/11/8 18:01
- * @Description: Http错误$
+ * @Description: 网络错误处理$
  */
 public class HttpErrorHandler<T> implements Function<Throwable, Observable<T>> {
 

@@ -7,7 +7,7 @@ import com.driverskr.library.network.INetworkRequiredInfo;
 /**
  * @Author: driverSkr
  * @Time: 2023/11/8 18:48
- * @Description: 初始化网络框架$
+ * @Description: 网络访问信息$
  */
 public class NetworkRequiredInfo implements INetworkRequiredInfo {
 

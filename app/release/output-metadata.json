@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
-      "outputFile": "app-release.apk"
+      "versionCode": 16,
+      "versionName": "1.6",
+      "outputFile": "GoodWeatherNew1.6.apk"
     }
   ],
   "elementType": "File"

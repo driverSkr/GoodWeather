@@ -1,6 +1,5 @@
 package com.driverskr.library.network.interceptor;
 
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import okhttp3.Response;
 /**
  * @Author: driverSkr
  * @Time: 2023/11/8 17:46
- * @Description: 返回拦截器$
+ * @Description: 返回拦截器(响应拦截器)$
  */
 public class ResponseInterceptor implements Interceptor {
 

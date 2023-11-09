@@ -1,8 +1,11 @@
 package com.driverskr.goodweather;
 
 import com.baidu.location.LocationClient;
+import com.driverskr.goodweather.db.AppDatabase;
+import com.driverskr.goodweather.utils.MVUtils;
 import com.driverskr.library.base.BaseApplication;
 import com.driverskr.library.network.NetworkApi;
+import com.tencent.mmkv.MMKV;
 
 /**
  * @Author: driverSkr
@@ -10,6 +13,9 @@ import com.driverskr.library.network.NetworkApi;
  * @Description: 全局Application$
  */
 public class WeatherApp extends BaseApplication {
+
+    //数据库
+    private static AppDatabase db;
 
     @Override
     public void onCreate() {
@@ -19,5 +25,16 @@ public class WeatherApp extends BaseApplication {
 
         //初始化网络框架
         NetworkApi.init(new NetworkRequiredInfo(this));
+
+        //MMKV初始化
+        MMKV.initialize(this);
+        //工具类初始化
+        MVUtils.getInstance();
+        //初始化Room数据库
+        db = AppDatabase.getInstance(this);
+    }
+
+    public static AppDatabase getDb() {
+        return db;
     }
 }

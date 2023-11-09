@@ -1,13 +1,13 @@
 package com.driverskr.library.network.interceptor;
 
 import android.annotation.SuppressLint;
-import android.icu.text.SimpleDateFormat;
 
 import androidx.annotation.NonNull;
 
 import com.driverskr.library.network.INetworkRequiredInfo;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import okhttp3.Interceptor;

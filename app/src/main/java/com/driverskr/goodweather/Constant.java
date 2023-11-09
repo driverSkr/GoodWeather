@@ -26,4 +26,15 @@ public class Constant {
      * 搜索类型：模糊搜索
      */
     public static final String FUZZY = "fuzzy";
+
+    /**
+     * 程序第一次运行
+     */
+    public static final String FIRST_RUN = "firstRun";
+
+    /**
+     * 今天第一次启动时间
+     */
+    public static final String FIRST_STARTUP_TIME_TODAY = "firstStartupTimeToday";
+
 }
