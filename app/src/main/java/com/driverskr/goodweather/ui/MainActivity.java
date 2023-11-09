@@ -20,8 +20,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.driverskr.goodweather.R;
-import com.driverskr.goodweather.adapter.DailyAdapter;
-import com.driverskr.goodweather.adapter.LifestyleAdapter;
+import com.driverskr.goodweather.ui.adapter.DailyAdapter;
+import com.driverskr.goodweather.ui.adapter.LifestyleAdapter;
 import com.driverskr.goodweather.db.bean.DailyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
 import com.driverskr.goodweather.db.bean.NowResponse;
@@ -29,6 +29,7 @@ import com.driverskr.goodweather.db.bean.SearchCityResponse;
 import com.driverskr.goodweather.databinding.ActivityMainBinding;
 import com.driverskr.goodweather.location.LocationCallback;
 import com.driverskr.goodweather.location.MyLocationListener;
+import com.driverskr.goodweather.utils.CityDialog;
 import com.driverskr.goodweather.utils.EasyDate;
 import com.driverskr.goodweather.viewmodel.MainViewModel;
 import com.driverskr.library.base.NetworkActivity;
@@ -36,7 +37,7 @@ import com.driverskr.library.base.NetworkActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends NetworkActivity<ActivityMainBinding> implements LocationCallback {
+public class MainActivity extends NetworkActivity<ActivityMainBinding> implements LocationCallback, CityDialog.SelectedCityCallback {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     //权限数组
@@ -56,6 +57,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     //生活指数数据和适配器
     private final List<LifestyleResponse.DailyBean> lifestyleList = new ArrayList<>();
     private final LifestyleAdapter lifestyleAdapter = new LifestyleAdapter(lifestyleList);
+
+    //城市弹窗
+    private CityDialog cityDialog;
 
     /**
      * 注册意图
@@ -82,9 +86,13 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         setFullScreenImmersion();
         //这个意图有一个特别的地方需要在Activity初始化之前进行注册
         initLocation();
+        //请求权限
         requestPermission();
+        //初始化视图
         initView();
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        //获取城市数据
+        viewModel.getAllCity();
     }
 
     private void initView() {
@@ -157,6 +165,11 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                     lifestyleAdapter.notifyDataSetChanged();
                 }
             });
+            viewModel.cityMutableLiveData.observe(this, provinces -> {
+                //城市弹窗初始化
+                cityDialog = CityDialog.getInstance(MainActivity.this, provinces);
+                cityDialog.setSelectedCityCallback(this);
+            });
             //错误信息返回
             viewModel.failed.observe(this, this::showLongMsg);
         }
@@ -177,7 +190,7 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.item_switching_cities) {
-            showMsg("切换城市");
+            if (cityDialog != null) cityDialog.show();
         }
         return true;
     }
@@ -271,5 +284,13 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         Drawable moreIcon = ContextCompat.getDrawable(toolbar.getContext(), R.drawable.ic_round_add_32);
         if (moreIcon != null ) toolbar.setOverflowIcon(moreIcon);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public void selectedCity(String cityName) {
+        //搜索城市
+        viewModel.searchCity(cityName, true);
+        //显示所选城市
+        binding.tvCity.setText(cityName);
     }
 }

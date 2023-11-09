@@ -5,10 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.driverskr.goodweather.db.bean.DailyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
 import com.driverskr.goodweather.db.bean.NowResponse;
+import com.driverskr.goodweather.db.bean.Province;
 import com.driverskr.goodweather.db.bean.SearchCityResponse;
+import com.driverskr.goodweather.repository.CityRepository;
 import com.driverskr.goodweather.repository.SearchCityRepository;
 import com.driverskr.goodweather.repository.WeatherRepository;
 import com.driverskr.library.base.BaseViewModel;
+
+import java.util.List;
 
 /**
  * @Author: driverSkr
@@ -24,6 +28,8 @@ public class MainViewModel extends BaseViewModel {
     public MutableLiveData<DailyResponse> dailyResponseMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<LifestyleResponse> lifestyleResponseMutableLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<List<Province>> cityMutableLiveData = new MutableLiveData<>();
 
     /**
      * 搜索成功
@@ -57,5 +63,9 @@ public class MainViewModel extends BaseViewModel {
      */
     public void lifestyle(String cityId) {
         WeatherRepository.getInstance().lifestyle(lifestyleResponseMutableLiveData, failed, cityId);
+    }
+
+    public void getAllCity() {
+        CityRepository.getInstance().getCityData(cityMutableLiveData);
     }
 }

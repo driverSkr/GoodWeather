@@ -1,4 +1,4 @@
-package com.driverskr.goodweather.adapter;
+package com.driverskr.goodweather.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;

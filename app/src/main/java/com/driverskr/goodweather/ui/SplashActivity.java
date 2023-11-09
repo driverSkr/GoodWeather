@@ -1,15 +1,12 @@
 package com.driverskr.goodweather.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.driverskr.goodweather.Constant;
-import com.driverskr.goodweather.R;
 import com.driverskr.goodweather.databinding.ActivitySplashBinding;
 import com.driverskr.goodweather.db.bean.Province;
 import com.driverskr.goodweather.utils.EasyDate;
