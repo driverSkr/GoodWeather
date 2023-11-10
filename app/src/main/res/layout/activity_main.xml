@@ -191,358 +191,418 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
                 <!--逐小时天气预报列表-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_hourly"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_hourly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_16"
                     android:paddingStart="@dimen/dp_16"
                     android:paddingEnd="@dimen/dp_16"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/white_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view" />
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_hourly"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.card.MaterialCardView>
                 <!--天气预报列表-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_daily"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_daily"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_16"
+                    app:cardBackgroundColor="@color/white_bg"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_hourly" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_hourly">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_daily"
+                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </com.google.android.material.card.MaterialCardView>
                 <!--空气质量-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lay_air"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_air"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_daily"
-                    tools:layout_editor_absoluteX="16dp">
-                    <!--空气质量-->
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/dp_16"
+                    app:cardBackgroundColor="@color/white_bg"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/card_daily">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/lay_air"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:text="空气质量"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_18"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <!--污染指数-->
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="污染指数"
-                        android:textColor="#DAEBEE"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-                    <com.driverskr.goodweather.view.RoundProgressBar
-                        android:id="@+id/rpb_aqi"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4"
-                        app:round_bg_color="#C6D7F4"
-                        app:round_progress_color="#FBFEF7" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="205dp" />
-
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:text="PM10"
-                        android:textColor="@color/ari_tx_color"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView4"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toTopOf="@+id/textView4" />
-
-                    <TextView
-                        android:id="@+id/tv_pm10"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
-
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:text="PM2.5"
-                        android:textColor="@color/ari_tx_color"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-                    <TextView
-                        android:id="@+id/tv_pm25"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
-                    <!--NO2 二氧化氮-->
-                    <LinearLayout
-                        android:id="@+id/lay_air_no"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6">
-
+                        tools:layout_editor_absoluteX="16dp">
+                        <!--空气质量-->
                         <TextView
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="NO"
-                            android:textColor="@color/ari_tx_color"
-                            android:textSize="12sp" />
-
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="空气质量"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_18"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <!--污染指数-->
                         <TextView
+                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:text="2"
-                            android:textColor="@color/ari_tx_color"
-                            android:textSize="8sp" />
-                    </LinearLayout>
+                            android:layout_marginTop="16dp"
+                            android:text="污染指数"
+                            android:textColor="#DAEBEE"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                    <TextView
-                        android:id="@+id/tv_no2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/lay_air_no"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
-                    <!--NO2 二氧化硫-->
-                    <LinearLayout
-                        android:id="@+id/lay_air_so"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/lay_air_no">
+                        <com.driverskr.goodweather.view.RoundProgressBar
+                            android:id="@+id/rpb_aqi"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView4"
+                            app:round_bg_color="#C6D7F4"
+                            app:round_progress_color="#FBFEF7" />
 
-                        <TextView
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SO"
-                            android:textColor="@color/ari_tx_color"
-                            android:textSize="12sp" />
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="205dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView5"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:text="2"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="PM10"
                             android:textColor="@color/ari_tx_color"
-                            android:textSize="8sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_so2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/lay_air_so"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
-                    <!--O3 臭氧-->
-                    <LinearLayout
-                        android:id="@+id/lay_air_o3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/lay_air_so">
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView4"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toTopOf="@+id/textView4" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tv_pm10"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="O"
-                            android:textColor="@color/ari_tx_color"
-                            android:textSize="12sp" />
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/textView6"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="top"
-                            android:text="3"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="PM2.5"
                             android:textColor="@color/ari_tx_color"
-                            android:textSize="8sp" />
-                    </LinearLayout>
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-                    <TextView
-                        android:id="@+id/tv_o3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/lay_air_o3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
+                        <TextView
+                            android:id="@+id/tv_pm25"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
+                        <!--NO2 二氧化氮-->
+                        <LinearLayout
+                            android:id="@+id/lay_air_no"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toBottomOf="@+id/textView6">
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:text="CO"
-                        android:textColor="@color/ari_tx_color"
-                        android:textSize="12sp"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/guideline3"
-                        app:layout_constraintTop_toBottomOf="@+id/lay_air_o3" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="NO"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_co"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:text="2"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="8sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_no2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/lay_air_no"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
+                        <!--NO2 二氧化硫-->
+                        <LinearLayout
+                            android:id="@+id/lay_air_so"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toBottomOf="@+id/lay_air_no">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SO"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:text="2"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="8sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_so2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/lay_air_so"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
+                        <!--O3 臭氧-->
+                        <LinearLayout
+                            android:id="@+id/lay_air_o3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toBottomOf="@+id/lay_air_so">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="O"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="top"
+                                android:text="3"
+                                android:textColor="@color/ari_tx_color"
+                                android:textSize="8sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_o3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/lay_air_o3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:text="CO"
+                            android:textColor="@color/ari_tx_color"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toStartOf="@+id/tv_pm10"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toBottomOf="@+id/lay_air_o3" />
+
+                        <TextView
+                            android:id="@+id/tv_co"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView5" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
                 <!--风向风力-->
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_wind"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginTop="16dp"
-                    android:text="风向风力"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_margin="@dimen/dp_16"
+                    app:cardBackgroundColor="@color/white_bg"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/lay_air" />
-                <!--大风车-->
-                <com.driverskr.goodweather.view.WhiteWindmills
-                    android:id="@+id/ww_big"
-                    android:layout_width="100dp"
-                    android:layout_height="120dp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
-                    tools:ignore="MissingConstraints" />
-                <!--小风车-->
-                <com.driverskr.goodweather.view.WhiteWindmills
-                    android:id="@+id/ww_small"
-                    android:layout_width="50dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="32dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ww_big"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                    app:layout_constraintStart_toStartOf="@+id/ww_big"
-                    tools:ignore="MissingConstraints" />
-                <!--纵向辅助线-->
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_begin="205dp" />
-                <!--风向风力文字-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@+id/ww_big"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/guideline2"
-                    app:layout_constraintTop_toTopOf="@+id/ww_big">
-                    <!--风向-->
-                    <TextView
-                        android:id="@+id/tv_wind_direction"
-                        android:layout_width="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/card_air">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-                    <!--风力-->
-                    <TextView
-                        android:id="@+id/tv_wind_power"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_24"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-                </LinearLayout>
+                        tools:layout_editor_absoluteX="16dp">
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="16dp"
+                            android:text="风向风力"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_18"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+                        <!--大风车-->
+                        <com.driverskr.goodweather.view.WhiteWindmills
+                            android:id="@+id/ww_big"
+                            android:layout_width="100dp"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView2"
+                            tools:ignore="MissingConstraints" />
+                        <!--小风车-->
+                        <com.driverskr.goodweather.view.WhiteWindmills
+                            android:id="@+id/ww_small"
+                            android:layout_width="50dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="32dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/ww_big"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                            app:layout_constraintStart_toStartOf="@+id/ww_big"
+                            tools:ignore="MissingConstraints" />
+                        <!--纵向辅助线-->
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="205dp" />
+                        <!--风向风力文字-->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="@+id/ww_big"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/guideline2"
+                            app:layout_constraintTop_toTopOf="@+id/ww_big">
+                            <!--风向-->
+                            <TextView
+                                android:id="@+id/tv_wind_direction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+                            <!--风力-->
+                            <TextView
+                                android:id="@+id/tv_wind_power"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_24"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
                 <!--生活建议-->
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:layout_marginTop="16dp"
-                    android:text="生活建议"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_18"
+                    app:cardBackgroundColor="@color/white_bg"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    android:layout_margin="@dimen/dp_16"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ww_big" />
-                <!--生活建议列表-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_lifestyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="@dimen/dp_16"
-                    android:paddingEnd="@dimen/dp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_wind">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:layout_editor_absoluteX="16dp">
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_16"
+                            android:text="生活建议"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_18"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+                        <!--生活建议列表-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_lifestyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:paddingStart="@dimen/dp_16"
+                            android:paddingEnd="@dimen/dp_16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
