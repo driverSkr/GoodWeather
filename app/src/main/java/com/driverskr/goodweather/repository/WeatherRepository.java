@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.driverskr.goodweather.Constant;
 import com.driverskr.goodweather.api.ApiService;
+import com.driverskr.goodweather.db.bean.AirResponse;
 import com.driverskr.goodweather.db.bean.DailyResponse;
+import com.driverskr.goodweather.db.bean.HourlyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
 import com.driverskr.goodweather.db.bean.NowResponse;
 import com.driverskr.library.network.ApiType;
@@ -45,7 +47,7 @@ public class WeatherRepository {
                            MutableLiveData<String> failed, String cityId) {
         String type = "实时天气-->";
         NetworkApi.createService(ApiService.class, ApiType.WEATHER).nowWeather(cityId)
-                .compose(NetworkApi.applySchedulers(new BaseObserver<NowResponse>() {
+                .compose(NetworkApi.applySchedulers(new BaseObserver<>() {
                     @Override
                     public void onSuccess(NowResponse nowResponse) {
                         if (nowResponse == null) {
@@ -53,7 +55,7 @@ public class WeatherRepository {
                             return;
                         }
                         //请求接口成功返回数据，失败返回状态码
-                        if (Constant.SUCCESS.equals(nowResponse.getCode())){
+                        if (Constant.SUCCESS.equals(nowResponse.getCode())) {
                             responseLiveData.postValue(nowResponse);
                         } else {
                             failed.postValue(type + nowResponse.getCode());
@@ -62,7 +64,7 @@ public class WeatherRepository {
 
                     @Override
                     public void onFailure(Throwable e) {
-                        Log.e(TAG,"onFailure：" + e.getMessage());
+                        Log.e(TAG, "onFailure：" + e.getMessage());
                         failed.postValue(type + e.getMessage());
                     }
                 }));
@@ -78,7 +80,7 @@ public class WeatherRepository {
                              MutableLiveData<String> failed, String cityId) {
         String type = "天气预报-->";
         NetworkApi.createService(ApiService.class, ApiType.WEATHER).dailyWeather(cityId)
-                .compose(NetworkApi.applySchedulers(new BaseObserver<DailyResponse>() {
+                .compose(NetworkApi.applySchedulers(new BaseObserver<>() {
                     @Override
                     public void onSuccess(DailyResponse dailyResponse) {
                         if (dailyResponse == null) {
@@ -112,7 +114,7 @@ public class WeatherRepository {
                           MutableLiveData<String> failed, String cityId) {
         String type = "生活指数-->";
         NetworkApi.createService(ApiService.class, ApiType.WEATHER).lifestyle("1,2,3,4,5,6,7,8,9", cityId)
-                .compose(NetworkApi.applySchedulers(new BaseObserver<LifestyleResponse>() {
+                .compose(NetworkApi.applySchedulers(new BaseObserver<>() {
                     @Override
                     public void onSuccess(LifestyleResponse lifestyleResponse) {
                         if (lifestyleResponse == null) {
@@ -134,4 +136,69 @@ public class WeatherRepository {
                     }
                 }));
     }
+
+    /**
+     * 逐小时天气预报
+     */
+    public void hourlyWeather(MutableLiveData<HourlyResponse> responseLiveData,
+                              MutableLiveData<String> failed, String cityId) {
+        String type = "逐小时天气预报-->";
+        NetworkApi.createService(ApiService.class, ApiType.WEATHER).hourlyWeather(cityId)
+                .compose(NetworkApi.applySchedulers(new BaseObserver<>() {
+                    @Override
+                    public void onSuccess(HourlyResponse hourlyResponse) {
+                        if (hourlyResponse == null) {
+                            failed.postValue("逐小时天气预报数据为null，请检查城市ID是否正确。");
+                            return;
+                        }
+                        //请求接口成功返回数据，失败返回状态码
+                        if (Constant.SUCCESS.equals(hourlyResponse.getCode())) {
+                            responseLiveData.postValue(hourlyResponse);
+                        } else {
+                            failed.postValue(type + hourlyResponse.getCode());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e) {
+                        Log.e(TAG, "onFailure: " + e.getMessage());
+                        failed.postValue(type + e.getMessage());
+                    }
+                }));
+    }
+
+    /**
+     * 空气质量天气预报
+     *
+     * @param responseLiveData 成功数据
+     * @param failed           错误信息
+     * @param cityId           城市ID
+     */
+    public void airWeather(MutableLiveData<AirResponse> responseLiveData,
+                           MutableLiveData<String> failed, String cityId) {
+        String type = "空气质量天气预报-->";
+        NetworkApi.createService(ApiService.class, ApiType.WEATHER).airWeather(cityId)
+                .compose(NetworkApi.applySchedulers(new BaseObserver<>() {
+                    @Override
+                    public void onSuccess(AirResponse airResponse) {
+                        if (airResponse == null) {
+                            failed.postValue("空气质量预报数据为null，请检查城市ID是否正确。");
+                            return;
+                        }
+                        //请求接口成功返回数据，失败返回状态码
+                        if (Constant.SUCCESS.equals(airResponse.getCode())) {
+                            responseLiveData.postValue(airResponse);
+                        } else {
+                            failed.postValue(type + airResponse.getCode());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable e) {
+                        Log.e(TAG, "onFailure: " + e.getMessage());
+                        failed.postValue(type + e.getMessage());
+                    }
+                }));
+    }
+
 }

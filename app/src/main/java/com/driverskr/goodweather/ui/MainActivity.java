@@ -5,8 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -15,12 +17,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
+import com.driverskr.goodweather.Constant;
 import com.driverskr.goodweather.R;
+import com.driverskr.goodweather.databinding.DialogDailyDetailBinding;
+import com.driverskr.goodweather.databinding.DialogHourlyDetailBinding;
+import com.driverskr.goodweather.db.bean.AirResponse;
+import com.driverskr.goodweather.db.bean.HourlyResponse;
+import com.driverskr.goodweather.location.GoodLocation;
 import com.driverskr.goodweather.ui.adapter.DailyAdapter;
+import com.driverskr.goodweather.ui.adapter.HourlyAdapter;
 import com.driverskr.goodweather.ui.adapter.LifestyleAdapter;
 import com.driverskr.goodweather.db.bean.DailyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
@@ -28,11 +37,14 @@ import com.driverskr.goodweather.db.bean.NowResponse;
 import com.driverskr.goodweather.db.bean.SearchCityResponse;
 import com.driverskr.goodweather.databinding.ActivityMainBinding;
 import com.driverskr.goodweather.location.LocationCallback;
-import com.driverskr.goodweather.location.MyLocationListener;
+import com.driverskr.goodweather.ui.adapter.OnClickItemCallback;
 import com.driverskr.goodweather.utils.CityDialog;
 import com.driverskr.goodweather.utils.EasyDate;
+import com.driverskr.goodweather.utils.GlideUtils;
+import com.driverskr.goodweather.utils.MVUtils;
 import com.driverskr.goodweather.viewmodel.MainViewModel;
 import com.driverskr.library.base.NetworkActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +57,8 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     //请求权限意图:这个组件也是Jetpack中的，意图可以做的事情是很多的，请求权限只是其中之一
     private ActivityResultLauncher<String[]> requestPermissionIntent;
 
-    public LocationClient mLocationClient = null;
-    private final MyLocationListener myListener = new MyLocationListener();
+    //对于定位功能的封装
+    private GoodLocation goodLocation;
 
     private MainViewModel viewModel;
 
@@ -58,8 +70,22 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     private final List<LifestyleResponse.DailyBean> lifestyleList = new ArrayList<>();
     private final LifestyleAdapter lifestyleAdapter = new LifestyleAdapter(lifestyleList);
 
+    //逐小时天气预报数据和适配器
+    private final List<HourlyResponse.HourlyBean> hourlyBeanList = new ArrayList<>();
+    private final HourlyAdapter hourlyAdapter = new HourlyAdapter(hourlyBeanList);
+
     //城市弹窗
     private CityDialog cityDialog;
+
+    //菜单
+    private Menu mMenu;
+    //城市信息来源标识  0：定位，   1：切换城市
+    private int cityFlag = 0;
+
+    //城市名称，定位和切换城市都会重新赋值。
+    private String mCityName;
+    //是否正在刷新
+    private boolean isRefresh;
 
     /**
      * 注册意图
@@ -97,13 +123,57 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
     private void initView() {
 
+        //自定义Toolbar图标
         setToolbarMoreIconCustom(binding.materialToolbar);
 
+        //天气预报列表
         binding.rvDaily.setLayoutManager(new LinearLayoutManager(this));
+        dailyAdapter.setOnClickItemCallback(position -> showDailyDetailDialog(dailyBeanList.get(position)));
         binding.rvDaily.setAdapter(dailyAdapter);
 
+        //生活指数列表
         binding.rvLifestyle.setLayoutManager(new LinearLayoutManager(this));
         binding.rvLifestyle.setAdapter(lifestyleAdapter);
+
+        //逐小时天气预报列表
+        LinearLayoutManager hourlyLayoutManager = new LinearLayoutManager(this);
+        hourlyLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.rvHourly.setLayoutManager(hourlyLayoutManager);
+        hourlyAdapter.setOnClickItemCallback(position -> showHourlyDetailDialog(hourlyBeanList.get(position)));
+        binding.rvHourly.setAdapter(hourlyAdapter);
+
+        //下拉刷新监听
+        binding.layRefresh.setOnRefreshListener(() -> {
+            if (mCityName == null) {
+                binding.layRefresh.setRefreshing(false);
+                return;
+            }
+            //设置正在刷新
+            isRefresh = true;
+            viewModel.searchCity(mCityName,true);
+        });
+
+        //滑动监听
+        binding.layScroll.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY > oldScrollY) {
+                //getMeasuredHeight() 表示控件的绘制高度
+                if (scrollY > binding.layScrollHeight.getMeasuredHeight()) {
+                    binding.tvTitle.setText((mCityName == null ? "城市天气" : mCityName));
+                }
+            } else if (scrollY < oldScrollY) {
+                if (scrollY < binding.layScrollHeight.getMeasuredHeight()) {
+                    //改回原来的
+                    binding.tvTitle.setText("城市天气");
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //更新壁纸
+        updateBgImage(MVUtils.getBoolean(Constant.USED_BING),MVUtils.getString(Constant.BING_URL));
     }
 
     /**
@@ -118,6 +188,14 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                 List<SearchCityResponse.LocationBean> location = searchCityResponse.getLocation();
                 if (location != null && location.size() > 0) {
                     String id = location.get(0).getId();
+                    //根据cityFlag设置重新定位菜单项是否显示
+                    mMenu.findItem(R.id.item_relocation).setVisible(cityFlag == 1);
+                    //检查到正在刷新
+                    if (isRefresh) {
+                        showMsg("刷新完成");
+                        binding.layRefresh.setRefreshing(false);
+                        isRefresh = false;
+                    }
                     Log.d(TAG, "城市ID: " + id);
                     if (id != null) {
                         //通过城市ID查询城市实时天气
@@ -126,6 +204,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                         viewModel.dailyWeather(id);
                         //通过城市ID查询生活指数
                         viewModel.lifestyle(id);
+                        //通过城市ID查询逐小时天气预报
+                        viewModel.hourlyWeather(id);
+                        //通过城市ID查询空气质量
+                        viewModel.airWeather(id);
                     }
                 }
             });
@@ -133,12 +215,16 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             viewModel.nowResponseMutableLiveData.observe(this, nowResponse -> {
                 NowResponse.NowBean now = nowResponse.getNow();
                 if (now != null) {
-                    binding.tvInfo.setText(now.getText());
+                    binding.tvWeek.setText(EasyDate.getTodayOfWeek());//星期
+                    binding.tvWeatherInfo.setText(now.getText());
                     binding.tvTemp.setText(now.getTemp());
-                    binding.tvUpdateTime.setText("最近更新时间：" + EasyDate.greenwichupToSimpleTime(nowResponse.getUpdateTime()));
+                    //精简更新时间
+                    String time = EasyDate.updateTime(nowResponse.getUpdateTime());
+                    binding.tvUpdateTime.setText(String.format("最近更新时间：%s%s", EasyDate.showTimeInfo(time), time));
+                    //binding.tvUpdateTime.setText("最近更新时间：" + EasyDate.greenwichupToSimpleTime(nowResponse.getUpdateTime()));
 
-                    binding.tvWindDirection.setText("风向     " + now.getWindDir());//风向
-                    binding.tvWindPower.setText("风力     " + now.getWindScale() + "级");//风力
+                    binding.tvWindDirection.setText(String.format("风向     %s", now.getWindDir()));//风向
+                    binding.tvWindPower.setText(String.format("风力     %s级", now.getWindScale()));//风力
                     binding.wwBig.startRotate();//大风车开始转动
                     binding.wwSmall.startRotate();//小风车开始转动
                 }
@@ -152,6 +238,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                     }
                     dailyBeanList.addAll(daily);
                     dailyAdapter.notifyDataSetChanged();
+                    //设置当天最高温和最低温
+                    binding.tvHeight.setText(String.format("%s℃", daily.get(0).getTempMax()));
+                    binding.tvLow.setText(String.format(" / %s℃", daily.get(0).getTempMin()));
                 }
             });
             //生活指数返回
@@ -165,10 +254,50 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                     lifestyleAdapter.notifyDataSetChanged();
                 }
             });
+            //获取本地城市数据返回
             viewModel.cityMutableLiveData.observe(this, provinces -> {
                 //城市弹窗初始化
                 cityDialog = CityDialog.getInstance(MainActivity.this, provinces);
                 cityDialog.setSelectedCityCallback(this);
+            });
+            //逐小时天气预报返回
+            viewModel.hourlyResponseMutableLiveData.observe(this, hourlyResponse -> {
+                List<HourlyResponse.HourlyBean> hourly = hourlyResponse.getHourly();
+                if (hourly != null) {
+                    if (hourlyBeanList.size() > 0) {
+                        hourlyBeanList.clear();
+                    }
+                    hourlyBeanList.addAll(hourly);
+                    hourlyAdapter.notifyDataSetChanged();
+                }
+            });
+            //空气质量返回
+            viewModel.airResponseMutableLiveData.observe(this, airResponse -> {
+                AirResponse.NowBean now = airResponse.getNow();
+                if (now == null) return;
+                binding.rpbAqi.setMaxProgress(300);//最大进度，用于计算
+                binding.rpbAqi.setMinText("0");//设置显示最小值
+                binding.rpbAqi.setMinTextSize(32f);
+                binding.rpbAqi.setMaxText("300");//设置显示最大值
+                binding.rpbAqi.setMaxTextSize(32f);
+                binding.rpbAqi.setProgress(Float.parseFloat(now.getAqi()));//当前进度
+                binding.rpbAqi.setArcBgColor(getColor(R.color.arc_bg_color));//圆弧的颜色
+                binding.rpbAqi.setProgressColor(getColor(R.color.arc_progress_color_nice));//进度圆弧的颜色
+                binding.rpbAqi.setFirstText(now.getCategory());//空气质量描述 取值范围：优，良，轻度污染，中度污染，重度污染，严重污染
+                binding.rpbAqi.setFirstTextSize(44f);//第一行文本的字体大小
+                binding.rpbAqi.setSecondText(now.getAqi());//空气质量值
+                binding.rpbAqi.setSecondTextSize(64f);//第二行文本的字体大小
+                binding.rpbAqi.setMinText("0");
+                binding.rpbAqi.setMinTextColor(getColor(R.color.arc_progress_color));
+
+                binding.tvAirInfo.setText(String.format("空气%s", now.getCategory()));
+
+                binding.tvPm10.setText(now.getPm10());//PM10
+                binding.tvPm25.setText(now.getPm2p5());//PM2.5
+                binding.tvNo2.setText(now.getNo2());//二氧化氮
+                binding.tvSo2.setText(now.getSo2());//二氧化硫
+                binding.tvO3.setText(now.getO3());//臭氧
+                binding.tvCo.setText(now.getCo());//一氧化碳
             });
             //错误信息返回
             viewModel.failed.observe(this, this::showLongMsg);
@@ -181,16 +310,34 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        mMenu = menu;
+        //根据cityFlag设置重新定位菜单项是否显示
+        mMenu.findItem(R.id.item_relocation).setVisible(cityFlag == 1);
+        //根据使用必应壁纸的状态，设置item项是否选中
+        mMenu.findItem(R.id.item_bing).setChecked(MVUtils.getBoolean(Constant.USED_BING));
         return true;
     }
 
     /**
      * 菜单item选择事件
      */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.item_switching_cities) {
-            if (cityDialog != null) cityDialog.show();
+        switch (item.getItemId()) {
+            case R.id.item_switching_cities:
+                if (cityDialog != null) cityDialog.show();
+                break;
+            case R.id.item_relocation:
+                startLocation();//点击重新定位item时，再次定位一下。
+                break;
+            case R.id.item_bing:
+                item.setChecked(!item.isChecked());
+                MVUtils.put(Constant.USED_BING, item.isChecked());
+                String bingUrl = MVUtils.getString(Constant.BING_URL);
+                //更新壁纸
+                updateBgImage(item.isChecked(), bingUrl);
+                break;
         }
         return true;
     }
@@ -199,23 +346,8 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
      * 初始化定位
      */
     private void initLocation(){
-        try {
-            mLocationClient = new LocationClient(getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (mLocationClient != null) {
-            myListener.setCallback(this);
-            //注册定位监听
-            mLocationClient.registerLocationListener(myListener);
-            LocationClientOption option = new LocationClientOption();
-            //如果开发者需要获得当前点的地址信息，此处必须为true
-            option.setIsNeedAddress(true);
-            //可选，设置是否需要最新版本的地址信息。默认不需要，即参数为false
-            option.setNeedNewVersionRgc(true);
-            //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
-            mLocationClient.setLocOption(option);
-        }
+        goodLocation = GoodLocation.getInstance(this);
+        goodLocation.setCallback(this);
     }
 
     /**
@@ -241,6 +373,7 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         String locationDescribe = bdLocation.getLocationDescribe(); //获取位置描述信息
 
         if (viewModel != null && district != null) {
+            mCityName = district; //定位后重新赋值
             //显示当前定位城市
             binding.tvCity.setText(district);
             //搜索城市
@@ -254,9 +387,8 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
      * 开始定位
      */
     private void startLocation() {
-        if (mLocationClient != null) {
-            mLocationClient.start();
-        }
+        cityFlag = 0;   //定位时，重新定位图标隐藏
+        goodLocation.startLocation();
     }
 
     /**
@@ -288,9 +420,78 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
     @Override
     public void selectedCity(String cityName) {
+        cityFlag = 1; //切换城市后，显示重新定位图标
+        mCityName = cityName;//切换城市后赋值
         //搜索城市
         viewModel.searchCity(cityName, true);
         //显示所选城市
         binding.tvCity.setText(cityName);
+    }
+
+    /**
+     * 更新背景图片
+     */
+    private void updateBgImage(boolean usedBing, String bingUrl) {
+        if (usedBing && !bingUrl.isEmpty()) {
+            GlideUtils.loadImg(this, bingUrl, binding.layRoot);
+        } else {
+            binding.layRoot.setBackground(ContextCompat.getDrawable(this, R.drawable.main_bg));
+        }
+    }
+
+    /**
+     * 显示天气预报详情弹窗
+     */
+    private void showDailyDetailDialog(DailyResponse.DailyBean dailyBean) {
+        BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this);
+        DialogDailyDetailBinding detailBinding = DialogDailyDetailBinding.inflate(LayoutInflater.from(MainActivity.this), null, false);
+        //关闭弹窗
+        detailBinding.ivClose.setOnClickListener(v -> dialog.dismiss());
+        //设置数据显示
+        detailBinding.toolbarDaily.setTitle(String.format("%s   %s", dailyBean.getFxDate(), EasyDate.getWeek(dailyBean.getFxDate())));
+        detailBinding.toolbarDaily.setSubtitle("天气预报详情");
+        detailBinding.tvTmpMax.setText(String.format("%s℃", dailyBean.getTempMax()));
+        detailBinding.tvTmpMin.setText(String.format("%s℃", dailyBean.getTempMin()));
+        detailBinding.tvUvIndex.setText(dailyBean.getUvIndex());
+        detailBinding.tvCondTxtD.setText(dailyBean.getTextDay());
+        detailBinding.tvCondTxtN.setText(dailyBean.getTextNight());
+        detailBinding.tvWindDeg.setText(String.format("%s°", dailyBean.getWind360Day()));
+        detailBinding.tvWindDir.setText(dailyBean.getWindDirDay());
+        detailBinding.tvWindSc.setText(String.format("%s级", dailyBean.getWindScaleDay()));
+        detailBinding.tvWindSpd.setText(String.format("%s公里/小时", dailyBean.getWindSpeedDay()));
+        detailBinding.tvCloud.setText(String.format("%s%%", dailyBean.getCloud()));
+        detailBinding.tvHum.setText(String.format("%s%%", dailyBean.getHumidity()));
+        detailBinding.tvPres.setText(String.format("%shPa", dailyBean.getPressure()));
+        detailBinding.tvPcpn.setText(String.format("%smm", dailyBean.getPrecip()));
+        detailBinding.tvVis.setText(String.format("%skm", dailyBean.getVis()));
+        dialog.setContentView(detailBinding.getRoot());
+        dialog.show();
+    }
+
+    /**
+     * 显示逐小时天气预报详情弹窗
+     */
+    private void showHourlyDetailDialog(HourlyResponse.HourlyBean hourlyBean) {
+        BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this);
+        DialogHourlyDetailBinding detailBinding = DialogHourlyDetailBinding.inflate(LayoutInflater.from(MainActivity.this), null, false);
+        //关闭弹窗
+        detailBinding.ivClose.setOnClickListener(v -> dialog.dismiss());
+        //设置数据显示
+        String time = EasyDate.updateTime(hourlyBean.getFxTime());
+        detailBinding.toolbarHourly.setTitle(EasyDate.showTimeInfo(time) + time);
+        detailBinding.toolbarHourly.setSubtitle("逐小时预报详情");
+        detailBinding.tvTmp.setText(String.format("%s℃", hourlyBean.getTemp()));
+        detailBinding.tvCondTxt.setText(hourlyBean.getText());
+        detailBinding.tvWindDeg.setText(String.format("%s°", hourlyBean.getWind360()));
+        detailBinding.tvWindDir.setText(hourlyBean.getWindDir());
+        detailBinding.tvWindSc.setText(String.format("%s级", hourlyBean.getWindScale()));
+        detailBinding.tvWindSpd.setText(String.format("公里/小时%s", hourlyBean.getWindSpeed()));
+        detailBinding.tvHum.setText(String.format("%s%%", hourlyBean.getHumidity()));
+        detailBinding.tvPres.setText(String.format("%shPa", hourlyBean.getPressure()));
+        detailBinding.tvPop.setText(String.format("%s%%", hourlyBean.getPop()));
+        detailBinding.tvDew.setText(String.format("%s℃", hourlyBean.getDew()));
+        detailBinding.tvCloud.setText(String.format("%s%%", hourlyBean.getCloud()));
+        dialog.setContentView(detailBinding.getRoot());
+        dialog.show();
     }
 }

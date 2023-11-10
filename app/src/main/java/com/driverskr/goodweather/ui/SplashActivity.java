@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.driverskr.goodweather.Constant;
 import com.driverskr.goodweather.databinding.ActivitySplashBinding;
+import com.driverskr.goodweather.db.bean.BingResponse;
 import com.driverskr.goodweather.db.bean.Province;
 import com.driverskr.goodweather.utils.EasyDate;
 import com.driverskr.goodweather.utils.MVUtils;
@@ -37,7 +39,8 @@ public class SplashActivity extends NetworkActivity<ActivitySplashBinding> {
         viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         //检查启动
         checkingStartup();
-        //checkFirstRunToday();
+        //检查今天第一次运行
+        checkFirstRunToday();
         new Handler().postDelayed(() -> jumpActivityFinish(MainActivity.class), 1000);
     }
 
@@ -57,11 +60,12 @@ public class SplashActivity extends NetworkActivity<ActivitySplashBinding> {
     private void checkFirstRunToday() {
         long todayFirstRunTime = MVUtils.getLong(Constant.FIRST_STARTUP_TIME_TODAY);
         long currentTimeMillis = System.currentTimeMillis();
-        long todayTwelveTimestamp = EasyDate.getTodayTwelveTimestamp();
-        //满足更新启动时间的条件，1.为0表示没有保存过时间，2. 当前时间
-        if (todayFirstRunTime == 0 || currentTimeMillis > todayFirstRunTime - (1000 * 60 * 10)) {
+        //满足更新启动时间的条件，1.为0表示没有保存过时间，2. 保存时间是否为今天
+        if (todayFirstRunTime == 0 || !EasyDate.isToday(todayFirstRunTime)) {
             MVUtils.put(Constant.FIRST_STARTUP_TIME_TODAY, currentTimeMillis);
             //今天第一次启动要做的事情
+            /*每日一图**/
+            viewModel.bing();
         }
     }
 
@@ -78,6 +82,20 @@ public class SplashActivity extends NetworkActivity<ActivitySplashBinding> {
                 Log.d(TAG, "onObserveData: 有数据了");
             }
         });
+        //必应壁纸数据返回
+        viewModel.bingResponseMutableLiveData.observe(this, bingResponse -> {
+            if (bingResponse.getImages() == null) {
+                showMsg("未获取到必应的图片");
+                return;
+            }
+            //得到的图片地址是没有前缀的，所以加上前缀否则显示不出来
+            String bingUrl = "https://cn.bing.com" + bingResponse.getImages().get(0).getUrl();
+            Log.d(TAG, "bingUrl: " + bingUrl);
+            //放入缓存
+            MVUtils.put(Constant.BING_URL, bingUrl);
+        });
+        //错误信息返回
+        viewModel.failed.observe(this, this::showLongMsg);
     }
 
     /**
@@ -90,7 +108,7 @@ public class SplashActivity extends NetworkActivity<ActivitySplashBinding> {
         try {
             inputStream = getResources().getAssets().open("city.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             String lines = bufferedReader.readLine();
             while (lines != null) {
                 stringBuffer.append(lines);

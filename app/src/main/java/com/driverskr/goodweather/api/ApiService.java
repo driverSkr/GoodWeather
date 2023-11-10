@@ -2,7 +2,10 @@ package com.driverskr.goodweather.api;
 
 import static com.driverskr.goodweather.Constant.API_KEY;
 
+import com.driverskr.goodweather.db.bean.AirResponse;
+import com.driverskr.goodweather.db.bean.BingResponse;
 import com.driverskr.goodweather.db.bean.DailyResponse;
+import com.driverskr.goodweather.db.bean.HourlyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
 import com.driverskr.goodweather.db.bean.NowResponse;
 import com.driverskr.goodweather.db.bean.SearchCityResponse;
@@ -57,4 +60,23 @@ public interface ApiService {
      */
     @GET("/v7/indices/1d?key=" + API_KEY)
     Observable<LifestyleResponse> lifestyle(@Query("type") String type,@Query("location") String location);
+
+    /**
+     * 必应壁纸
+     */
+    @GET("/HPImageArchive.aspx?format=js&idx=0&n=1")
+    Observable<BingResponse> bing();
+
+    /**
+     * 逐小时天气
+     */
+    @GET("/v7/weather/24h?key=" + API_KEY)
+    Observable<HourlyResponse> hourlyWeather(@Query("location") String location);
+
+    /**
+     * 空气质量
+     */
+    @GET("/v7/air/now?key=" + API_KEY)
+    Observable<AirResponse> airWeather(@Query("location") String location);
+
 }
