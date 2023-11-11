@@ -266,11 +266,7 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             viewModel.lifestyleResponseMutableLiveData.observe(this, lifestyleResponse -> {
                 List<LifestyleResponse.DailyBean> daily = lifestyleResponse.getDaily();
                 if (daily != null) {
-                    if (lifestyleList.size() > 0) {
-                        lifestyleList.clear();
-                    }
-                    lifestyleList.addAll(daily);
-                    lifestyleAdapter.notifyDataSetChanged();
+                    initLifeIndex(daily);
                 }
             });
             //获取本地城市数据返回
@@ -527,6 +523,13 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     }
 
     private void initLifeIndex(List<LifestyleResponse.DailyBean> lifestyleList){
-        //binding.liveIndex.
+        binding.liveIndex.sportText.setText(lifestyleList.get(0).getCategory());
+        binding.liveIndex.carwashingText.setText(lifestyleList.get(1).getCategory());
+        binding.liveIndex.dressingText.setText(lifestyleList.get(2).getCategory());
+        binding.liveIndex.fishingText.setText(lifestyleList.get(3).getCategory());
+        binding.liveIndex.ultravioletText.setText(lifestyleList.get(4).getCategory());
+        binding.liveIndex.tourText.setText(lifestyleList.get(5).getCategory());
+        binding.liveIndex.coldriskText.setText(lifestyleList.get(8).getCategory());
+        binding.liveIndex.comfortText.setText(lifestyleList.get(7).getCategory());
     }
 }

@@ -1,0 +1,39 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- Outer Circle -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M367.7 952.5c-79 0-153.2-30.7-209-86.6-55.8-55.8-86.6-130.1-86.6-209 0-79 30.7-153.2 86.6-209l291.7-291.7c55.8-55.8 130.1-86.6 209-86.6 79 0 153.2 30.7 209 86.6s86.6 130.1 86.6 209c0 79-30.7 153.2-86.6 209L576.7 865.9c-55.8 55.8-130 86.6-209 86.6zM208.2 816.4c42.6 42.6 99.3 66.1 159.5 66.1 60.3 0 116.9-23.5 159.5-66.1L819 524.6c88-88 88-231.1 0-319-42.6-42.6-99.3-66.1-159.5-66.1-60.3 0-116.9 23.5-159.5 66.1L208.2 497.3c-88 88-88 231.1 0 319.1z"
+        />
+
+    <!-- Check Mark -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M310.29 359.784l49.498-49.497L719.772 670.27l-49.497 49.497z"
+        />
+
+    <!-- Plus Sign -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M768.1 806.7h128v50h-128z M807.2 767.8h50v127.8h-50z"
+        />
+
+    <!-- Minus Sign -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M284.4 160.8h-6c-16.9 0-30.6-14.3-30.6-31.9 0-17.6 13.7-31.9 30.6-31.9h6c16.9 0 30.6 14.3 30.6 31.9 0 17.6-13.7 31.9-30.6 31.9z"
+        />
+
+    <!-- Circle -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M137.5 341c-40.8 0-74-33.2-74-74s33.2-74 74-74 74 33.2 74 74-33.2 74-74 74z m0-98c-13.2 0-24 10.8-24 24s10.8 24 24 24 24-10.8 24-24-10.8-24-24-24z"
+        />
+
+</vector>
+
+
