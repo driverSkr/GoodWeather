@@ -6,6 +6,7 @@ import com.driverskr.goodweather.db.bean.AirResponse;
 import com.driverskr.goodweather.db.bean.DailyResponse;
 import com.driverskr.goodweather.db.bean.HourlyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
+import com.driverskr.goodweather.db.bean.MyCity;
 import com.driverskr.goodweather.db.bean.NowResponse;
 import com.driverskr.goodweather.db.bean.Province;
 import com.driverskr.goodweather.db.bean.SearchCityResponse;
@@ -36,6 +37,14 @@ public class MainViewModel extends BaseViewModel {
     public MutableLiveData<HourlyResponse> hourlyResponseMutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<AirResponse> airResponseMutableLiveData = new MutableLiveData<>();
+
+    /**
+     * 添加我的城市数据，在定位之后添加数据
+     */
+    public void addMyCityData(String cityName) {
+        MyCity myCity = new MyCity(cityName);
+        CityRepository.getInstance().addMyCityData(myCity);
+    }
 
     /**
      * 搜索成功

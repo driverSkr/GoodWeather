@@ -1,23 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable-v24/bg_white.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_add_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_add_32.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_check_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_close_24.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_delete_forever_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_location_24.xml" value="0.1195" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_location_on_24.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_search_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/rounded_corners.xml" value="0.1" />
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.12280701754385964" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_manage_city.xml" value="0.18596491228070175" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_splash.xml" value="0.22447916666666667" />
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_daily_detail.xml" value="0.12323943661971831" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_add_city.xml" value="0.18596491228070175" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_city.xml" value="0.225" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_daily_detail.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_hourly_detail.xml" value="0.12323943661971831" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_daily_rv.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_hourly_rv.xml" value="0.4" />
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_lifestyle_rv.xml" value="0.10065590312815338" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_lifestyle_rv.xml" value="0.2" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_my_city_rv.xml" value="0.264" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_recommend_city.xml" value="0.264" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_search_city_rv.xml" value="0.536" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_text_rv.xml" value="0.225" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/window_add.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/menu/menu_main.xml" value="0.20588235294117646" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/library/src/main/res/drawable/shape_loading_bg.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/library/src/main/res/layout/dialog_loading.xml" value="0.2" />
       </map>
     </option>
   </component>

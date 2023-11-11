@@ -1,17 +1,22 @@
 package com.driverskr.library.base;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.driverskr.library.R;
 
 /**
  * @Author: driverSkr
@@ -21,6 +26,8 @@ import androidx.appcompat.widget.Toolbar;
 public class BaseActivity extends AppCompatActivity {
 
     protected AppCompatActivity mContext;
+
+    private Dialog mDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,4 +102,44 @@ public class BaseActivity extends AppCompatActivity {
         BaseApplication.getActivityManager().finishAll();
     }
 
+    /**
+     * 设置状态栏的文字和图标颜色
+     * 在Android11及以上版本中弃用了setSystemUiVisibility,这里做了一下适配
+     */
+    protected void setStatusBar(boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = getWindow().getInsetsController();
+            controller.setSystemBarsAppearance(dark ? WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS : 0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS);
+            controller.setSystemBarsAppearance(dark ? WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS : 0,
+                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(dark ?
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR :
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+    }
+
+    /**
+     * 显示加载弹窗
+     */
+    protected void showLoadingDialog() {
+        if (mDialog == null) {
+            mDialog = new Dialog(mContext, R.style.loading_dialog);
+        }
+        mDialog.setContentView(R.layout.dialog_loading);
+        mDialog.setCancelable(true);
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        mDialog.show();
+    }
+
+    /**
+     * 隐藏加载弹窗
+     */
+    protected void dismissLoadingDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
+        mDialog = null;
+    }
 }

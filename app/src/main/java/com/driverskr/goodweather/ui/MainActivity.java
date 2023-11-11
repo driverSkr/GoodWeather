@@ -2,6 +2,7 @@ package com.driverskr.goodweather.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -87,6 +88,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     //是否正在刷新
     private boolean isRefresh;
 
+    //跳转Activity
+    private ActivityResultLauncher<Intent> jumpActivityIntent;
+
     /**
      * 注册意图
      */
@@ -99,6 +103,21 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             if (fineLocation && writeStorage) {
                 //权限已经获取到，开始定位
                 startLocation();
+            }
+        });
+        //跳转Activity
+        jumpActivityIntent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                //获取上个页面返回的数据
+                String city = result.getData().getStringExtra(Constant.CITY_RESULT);
+                //检查返回的城市 , 如果返回的城市是当前定位城市，并且当前定位标志为0，则不需要请求
+                if (city.equals(MVUtils.getString(Constant.LOCATION_CITY)) && cityFlag == 0) {
+                    Log.d(TAG, "onRegister: 管理城市页面返回不需要进行天气查询");
+                    return;
+                }
+                //反之就直接调用选中城市的方法进行城市天气搜索
+                Log.d(TAG, "onRegister: 管理城市页面返回进行天气查询");
+                selectedCity(city);
             }
         });
     }
@@ -158,12 +177,12 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             if (scrollY > oldScrollY) {
                 //getMeasuredHeight() 表示控件的绘制高度
                 if (scrollY > binding.layScrollHeight.getMeasuredHeight()) {
-                    binding.tvTitle.setText((mCityName == null ? "城市天气" : mCityName));
+                    binding.materialToolbar.setTitle((mCityName == null ? "城市天气" : mCityName));
                 }
             } else if (scrollY < oldScrollY) {
                 if (scrollY < binding.layScrollHeight.getMeasuredHeight()) {
                     //改回原来的
-                    binding.tvTitle.setText("城市天气");
+                    binding.materialToolbar.setTitle("城市天气");
                 }
             }
         });
@@ -273,6 +292,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             });
             //空气质量返回
             viewModel.airResponseMutableLiveData.observe(this, airResponse -> {
+                //隐藏加载窗口
+                dismissLoadingDialog();
+
                 AirResponse.NowBean now = airResponse.getNow();
                 if (now == null) return;
                 binding.rpbAqi.setMaxProgress(300);//最大进度，用于计算
@@ -325,18 +347,21 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_switching_cities:
+            case R.id.item_switching_cities:    //切换城市
                 if (cityDialog != null) cityDialog.show();
                 break;
-            case R.id.item_relocation:
+            case R.id.item_relocation:      //重新定位
                 startLocation();//点击重新定位item时，再次定位一下。
                 break;
-            case R.id.item_bing:
+            case R.id.item_bing:        //是否使用必应壁纸
                 item.setChecked(!item.isChecked());
                 MVUtils.put(Constant.USED_BING, item.isChecked());
                 String bingUrl = MVUtils.getString(Constant.BING_URL);
                 //更新壁纸
                 updateBgImage(item.isChecked(), bingUrl);
+                break;
+            case R.id.item_manage_city:     //管理城市
+                jumpActivityIntent.launch(new Intent(mContext, ManageCityActivity.class));
                 break;
         }
         return true;
@@ -357,6 +382,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
      */
     @Override
     public void onRonReceiveLocation(BDLocation bdLocation) {
+        //显示加载弹窗
+        showLoadingDialog();
+
         double latitude = bdLocation.getLatitude(); //获取纬度信息
         double longitude = bdLocation.getLongitude();   //获取经度信息
         float radius = bdLocation.getRadius();  //获取定位精度，默认值为0.0f
@@ -374,6 +402,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
         if (viewModel != null && district != null) {
             mCityName = district; //定位后重新赋值
+            //保存定位城市
+            MVUtils.put(Constant.LOCATION_CITY, district);
+            //保存到我的城市数据中
+            viewModel.addMyCityData(district);
             //显示当前定位城市
             binding.tvCity.setText(district);
             //搜索城市
@@ -408,11 +440,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
     /**
      * 添加菜单，修改默认的三个点图标
-     * @param toolbar
      */
     public void setToolbarMoreIconCustom(Toolbar toolbar) {
         if (toolbar == null) return;
-        toolbar.setTitle("");
+        toolbar.setTitle("城市天气");
         Drawable moreIcon = ContextCompat.getDrawable(toolbar.getContext(), R.drawable.ic_round_add_32);
         if (moreIcon != null ) toolbar.setOverflowIcon(moreIcon);
         setSupportActionBar(toolbar);

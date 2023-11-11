@@ -14,21 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        app:title="城市天气"
+        app:titleTextColor="@color/white"
+        app:titleCentered="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:text="城市天气"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16" />
-    </com.google.android.material.appbar.MaterialToolbar>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <!--下拉刷新视图-->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -242,6 +233,7 @@
                         android:id="@+id/lay_air"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_16"
                         tools:layout_editor_absoluteX="16dp">
                         <!--空气质量-->
                         <TextView
@@ -498,6 +490,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_16"
                         tools:layout_editor_absoluteX="16dp">
                         <TextView
                             android:id="@+id/textView2"
@@ -566,6 +559,7 @@
                 </com.google.android.material.card.MaterialCardView>
                 <!--生活建议-->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_live"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/white_bg"
@@ -592,9 +586,9 @@
                         <!--生活建议列表-->
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_lifestyle"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="4dp"
                             android:paddingStart="@dimen/dp_16"
                             android:paddingEnd="@dimen/dp_16"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -604,6 +598,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_80"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_live"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

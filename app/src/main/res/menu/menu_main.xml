@@ -16,4 +16,8 @@
         android:checkable="true"
         android:orderInCategory="20"
         android:title="必应壁纸" />
+
+    <item
+        android:id="@+id/item_manage_city"
+        android:title="管理城市"/>
 </menu>

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_bg">#33FFFFFF</color>
+    <color name="yellow">#FFD600</color>
 
     <color name="temp_min_tx">#B3BCCA</color><!--低温文字颜色-->
     <color name="line_color">#EEEEEE</color>
@@ -18,6 +19,11 @@
     <color name="arc_progress_color">#FBFEF7</color>
     <color name="arc_progress_color_nice">#00FF6A</color>
     <color name="transparent">#00000000</color><!--透明-->
+
+    <color name="bg_color">#F8F8F8</color><!--页面背景颜色-->
+    <color name="btn_ripple_color">#B5B3B3</color><!--按钮触摸颜色-->
+    <color name="card_ripple_color">#A8C0EC</color><!--卡片视图触摸颜色-->
+
 
 
 </resources>
