@@ -15,7 +15,7 @@
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_location_on_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_search_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/rounded_corners.xml" value="0.1" />
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.26438188494492043" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_manage_city.xml" value="0.18596491228070175" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_splash.xml" value="0.22447916666666667" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_add_city.xml" value="0.18596491228070175" />
@@ -29,6 +29,7 @@
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_recommend_city.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_search_city_rv.xml" value="0.536" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_text_rv.xml" value="0.225" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/life_index.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/window_add.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/menu/menu_main.xml" value="0.20588235294117646" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/library/src/main/res/drawable/shape_loading_bg.xml" value="0.1" />

@@ -558,51 +558,15 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <!--生活建议-->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_live"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/white_bg"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp"
-                    android:layout_margin="@dimen/dp_16"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_wind">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:layout_editor_absoluteX="16dp">
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_16"
-                            android:layout_marginTop="@dimen/dp_16"
-                            android:text="生活建议"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_18"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
-                        <!--生活建议列表-->
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_lifestyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:paddingStart="@dimen/dp_16"
-                            android:paddingEnd="@dimen/dp_16"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
+                <include
+                    android:id="@+id/live_index"
+                    layout="@layout/life_index"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_80"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_live"/>
+                    app:layout_constraintTop_toBottomOf="@+id/live_index"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

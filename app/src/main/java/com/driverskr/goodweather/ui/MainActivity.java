@@ -151,8 +151,8 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         binding.rvDaily.setAdapter(dailyAdapter);
 
         //生活指数列表
-        binding.rvLifestyle.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvLifestyle.setAdapter(lifestyleAdapter);
+        /*binding.rvLifestyle.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvLifestyle.setAdapter(lifestyleAdapter);*/
 
         //逐小时天气预报列表
         LinearLayoutManager hourlyLayoutManager = new LinearLayoutManager(this);
@@ -524,5 +524,9 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         detailBinding.tvCloud.setText(String.format("%s%%", hourlyBean.getCloud()));
         dialog.setContentView(detailBinding.getRoot());
         dialog.show();
+    }
+
+    private void initLifeIndex(List<LifestyleResponse.DailyBean> lifestyleList){
+        //binding.liveIndex.
     }
 }

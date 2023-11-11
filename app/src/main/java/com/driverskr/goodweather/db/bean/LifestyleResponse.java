@@ -15,6 +15,17 @@ public class LifestyleResponse {
     private ReferBean refer;
     private List<DailyBean> daily;
 
+    @Override
+    public String toString() {
+        return "LifestyleResponse{" +
+                "code='" + code + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", fxLink='" + fxLink + '\'' +
+                ", refer=" + refer +
+                ", daily=" + daily +
+                '}';
+    }
+
     public String getCode() {
         return code;
     }
@@ -59,6 +70,14 @@ public class LifestyleResponse {
         private List<String> sources;
         private List<String> license;
 
+        @Override
+        public String toString() {
+            return "ReferBean{" +
+                    "sources=" + sources +
+                    ", license=" + license +
+                    '}';
+        }
+
         public List<String> getSources() {
             return sources;
         }
@@ -84,6 +103,18 @@ public class LifestyleResponse {
         private String level;
         private String category;
         private String text;
+
+        @Override
+        public String toString() {
+            return "DailyBean{" +
+                    "date='" + date + '\'' +
+                    ", type='" + type + '\'' +
+                    ", name='" + name + '\'' +
+                    ", level='" + level + '\'' +
+                    ", category='" + category + '\'' +
+                    ", text='" + text + '\'' +
+                    '}';
+        }
 
         public String getDate() {
             return date;
