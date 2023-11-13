@@ -26,6 +26,7 @@ import com.driverskr.goodweather.Constant;
 import com.driverskr.goodweather.R;
 import com.driverskr.goodweather.databinding.DialogDailyDetailBinding;
 import com.driverskr.goodweather.databinding.DialogHourlyDetailBinding;
+import com.driverskr.goodweather.databinding.DialogLifeIndexDetailBinding;
 import com.driverskr.goodweather.db.bean.AirResponse;
 import com.driverskr.goodweather.db.bean.HourlyResponse;
 import com.driverskr.goodweather.location.GoodLocation;
@@ -40,6 +41,7 @@ import com.driverskr.goodweather.databinding.ActivityMainBinding;
 import com.driverskr.goodweather.location.LocationCallback;
 import com.driverskr.goodweather.ui.adapter.OnClickItemCallback;
 import com.driverskr.goodweather.utils.CityDialog;
+import com.driverskr.goodweather.utils.DialogShowStyle;
 import com.driverskr.goodweather.utils.EasyDate;
 import com.driverskr.goodweather.utils.GlideUtils;
 import com.driverskr.goodweather.utils.MVUtils;
@@ -548,6 +550,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         dialog.show();
     }
 
+    /**
+     * 生活建议数据填充
+     * @param lifestyleList 数据包
+     */
     private void initLifeIndex(List<LifestyleResponse.DailyBean> lifestyleList){
         binding.liveIndex.sportText.setText(lifestyleList.get(0).getCategory());
         binding.liveIndex.carwashingText.setText(lifestyleList.get(1).getCategory());
@@ -557,5 +563,13 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         binding.liveIndex.tourText.setText(lifestyleList.get(5).getCategory());
         binding.liveIndex.coldriskText.setText(lifestyleList.get(8).getCategory());
         binding.liveIndex.comfortText.setText(lifestyleList.get(7).getCategory());
+
+        //绑定点击事件
+
+    }
+
+    private void onClickLifeItem(LifestyleResponse.DailyBean dailyBean){
+        DialogShowStyle dialogShowStyle = new DialogShowStyle(mContext);
+        DialogLifeIndexDetailBinding binding = DialogLifeIndexDetailBinding.inflate(LayoutInflater.from(mContext));
     }
 }

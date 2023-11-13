@@ -31,6 +31,7 @@
             android:layout_marginTop="20dp">
             <!--显示运动-->
             <RelativeLayout
+                android:id="@+id/rl_sport"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -69,6 +70,7 @@
             </RelativeLayout>
             <!--洗车-->
             <RelativeLayout
+                android:id="@+id/rl_car_washing"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -108,6 +110,7 @@
             android:layout_height="wrap_content">
             <!--穿衣-->
             <RelativeLayout
+                android:id="@+id/rl_dressing"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -146,6 +149,7 @@
             </RelativeLayout>
             <!--钓鱼-->
             <RelativeLayout
+                android:id="@+id/rl_fishing"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -185,6 +189,7 @@
             android:layout_height="wrap_content">
             <!--紫外线-->
             <RelativeLayout
+                android:id="@+id/rl_ultraviolet"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -223,6 +228,7 @@
             </RelativeLayout>
             <!--旅游-->
             <RelativeLayout
+                android:id="@+id/rl_tour"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -266,6 +272,7 @@
             android:layout_marginBottom="20dp">
             <!--感冒-->
             <RelativeLayout
+                android:id="@+id/rl_cold_risk"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -304,6 +311,7 @@
             </RelativeLayout>
             <!--舒适度-->
             <RelativeLayout
+                android:id="@+id/rl_comfort"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
