@@ -32,6 +32,7 @@
             <!--显示运动-->
             <RelativeLayout
                 android:id="@+id/rl_sport"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -71,6 +72,7 @@
             <!--洗车-->
             <RelativeLayout
                 android:id="@+id/rl_car_washing"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -111,6 +113,7 @@
             <!--穿衣-->
             <RelativeLayout
                 android:id="@+id/rl_dressing"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -150,6 +153,7 @@
             <!--钓鱼-->
             <RelativeLayout
                 android:id="@+id/rl_fishing"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -190,6 +194,7 @@
             <!--紫外线-->
             <RelativeLayout
                 android:id="@+id/rl_ultraviolet"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -229,6 +234,7 @@
             <!--旅游-->
             <RelativeLayout
                 android:id="@+id/rl_tour"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -273,6 +279,7 @@
             <!--感冒-->
             <RelativeLayout
                 android:id="@+id/rl_cold_risk"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">
@@ -312,6 +319,7 @@
             <!--舒适度-->
             <RelativeLayout
                 android:id="@+id/rl_comfort"
+                android:foreground="@drawable/bg_white"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1">

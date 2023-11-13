@@ -45,6 +45,7 @@ import com.driverskr.goodweather.utils.DialogShowStyle;
 import com.driverskr.goodweather.utils.EasyDate;
 import com.driverskr.goodweather.utils.GlideUtils;
 import com.driverskr.goodweather.utils.MVUtils;
+import com.driverskr.goodweather.utils.SizeUtils;
 import com.driverskr.goodweather.viewmodel.MainViewModel;
 import com.driverskr.library.base.NetworkActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -565,11 +566,43 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         binding.liveIndex.comfortText.setText(lifestyleList.get(7).getCategory());
 
         //绑定点击事件
-
+        binding.liveIndex.rlSport.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(0));
+        });
+        binding.liveIndex.rlCarWashing.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(1));
+        });
+        binding.liveIndex.rlDressing.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(2));
+        });
+        binding.liveIndex.rlFishing.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(3));
+        });
+        binding.liveIndex.rlUltraviolet.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(4));
+        });
+        binding.liveIndex.rlTour.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(5));
+        });
+        binding.liveIndex.rlColdRisk.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(8));
+        });
+        binding.liveIndex.rlComfort.setOnClickListener(v -> {
+            onClickLifeItem(lifestyleList.get(7));
+        });
     }
 
     private void onClickLifeItem(LifestyleResponse.DailyBean dailyBean){
         DialogShowStyle dialogShowStyle = new DialogShowStyle(mContext);
         DialogLifeIndexDetailBinding binding = DialogLifeIndexDetailBinding.inflate(LayoutInflater.from(mContext));
+        binding.tvTitle.setText(dailyBean.getName());
+        binding.tvTime.setText(dailyBean.getDate());
+        binding.tvType.setText(dailyBean.getType());
+        binding.tvName.setText(dailyBean.getName());
+        binding.tvLevel.setText(dailyBean.getLevel());
+        binding.tvKind.setText(dailyBean.getCategory());
+        binding.tvText.setText(dailyBean.getText());
+
+        dialogShowStyle.showCenterPopupWindow(binding.getRoot(), SizeUtils.dp2px(mContext, 300), SizeUtils.dp2px(mContext, 400), true);
     }
 }
