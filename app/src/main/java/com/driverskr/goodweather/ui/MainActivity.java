@@ -85,6 +85,7 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
     //城市名称，定位和切换城市都会重新赋值。
     private String mCityName;
+    private String locationCity = "";//保存定位的城市
     //是否正在刷新
     private boolean isRefresh;
 
@@ -150,10 +151,6 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         dailyAdapter.setOnClickItemCallback(position -> showDailyDetailDialog(dailyBeanList.get(position)));
         binding.rvDaily.setAdapter(dailyAdapter);
 
-        //生活指数列表
-        /*binding.rvLifestyle.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvLifestyle.setAdapter(lifestyleAdapter);*/
-
         //逐小时天气预报列表
         LinearLayoutManager hourlyLayoutManager = new LinearLayoutManager(this);
         hourlyLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -177,12 +174,18 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
             if (scrollY > oldScrollY) {
                 //getMeasuredHeight() 表示控件的绘制高度
                 if (scrollY > binding.layScrollHeight.getMeasuredHeight()) {
-                    binding.materialToolbar.setTitle((mCityName == null ? "城市天气" : mCityName));
+                    binding.tvTitle.setText((mCityName == null ? "城市天气" : mCityName));
+                    if (mCityName.equals(locationCity)){
+                        binding.ivLocationTool.setVisibility(View.VISIBLE);
+                    }
                 }
             } else if (scrollY < oldScrollY) {
                 if (scrollY < binding.layScrollHeight.getMeasuredHeight()) {
                     //改回原来的
-                    binding.materialToolbar.setTitle("城市天气");
+                    binding.tvTitle.setText("城市天气");
+                    if (mCityName.equals(locationCity)){
+                        binding.ivLocationTool.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -398,12 +401,20 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
         if (viewModel != null && district != null) {
             mCityName = district; //定位后重新赋值
+            locationCity = district; // 保存定位城市
+            //更新顶部标题
+            if (!binding.tvTitle.getText().equals("城市天气")){
+                binding.tvTitle.setText(district);
+                binding.ivLocationTool.setVisibility(View.VISIBLE);
+            }
             //保存定位城市
             MVUtils.put(Constant.LOCATION_CITY, district);
             //保存到我的城市数据中
             viewModel.addMyCityData(district);
             //显示当前定位城市
             binding.tvCity.setText(district);
+            //显示定位图标
+            binding.ivLocationIcon.setVisibility(View.VISIBLE);
             //搜索城市
             viewModel.searchCity(district,true);
         } else {
@@ -439,16 +450,31 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
      */
     public void setToolbarMoreIconCustom(Toolbar toolbar) {
         if (toolbar == null) return;
-        toolbar.setTitle("城市天气");
+        toolbar.setTitle("");
         Drawable moreIcon = ContextCompat.getDrawable(toolbar.getContext(), R.drawable.ic_round_add_32);
         if (moreIcon != null ) toolbar.setOverflowIcon(moreIcon);
         setSupportActionBar(toolbar);
     }
 
+    /**
+     * 切换城市
+     * @param cityName 想切换的城市
+     */
     @Override
     public void selectedCity(String cityName) {
         cityFlag = 1; //切换城市后，显示重新定位图标
         mCityName = cityName;//切换城市后赋值
+        //更新顶部标题
+        if (!binding.tvTitle.getText().equals("城市天气")){
+            binding.tvTitle.setText(cityName);
+            binding.ivLocationTool.setVisibility(View.GONE);
+        }
+
+        if (cityName.equals(locationCity)) {
+            binding.ivLocationIcon.setVisibility(View.VISIBLE);
+        } else {
+            binding.ivLocationIcon.setVisibility(View.GONE);
+        }
         //搜索城市
         viewModel.searchCity(cityName, true);
         //显示所选城市

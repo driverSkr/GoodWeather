@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable-v24/bg_white.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2155" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_location_white.xml" value="0.2155" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_add_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_add_32.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_arrow_back_24.xml" value="0.1" />
@@ -14,6 +16,7 @@
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_location_24.xml" value="0.1195" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_location_on_24.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_round_search_24.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/ic_sport.xml" value="0.2155" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/rounded_corners.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.26438188494492043" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_manage_city.xml" value="0.18596491228070175" />

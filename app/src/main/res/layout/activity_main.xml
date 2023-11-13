@@ -14,12 +14,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:title="城市天气"
-        app:titleTextColor="@color/white"
-        app:titleCentered="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:text="城市天气"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_20" />
+        <ImageView
+            android:id="@+id/iv_location_tool"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/ic_location_white"/>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <!--下拉刷新视图-->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -39,11 +57,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0">
                 <!--滑动距离布局-->
+                <!--App名称-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lay_scroll_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <!--天气状况-->
@@ -130,19 +150,35 @@
                             android:textSize="@dimen/sp_14" />
                     </LinearLayout>
                     <!--城市-->
-                    <TextView
-                        android:id="@+id/tv_city"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="城市"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_20"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="@+id/tv_temp"
                         app:layout_constraintStart_toStartOf="@+id/tv_temp"
-                        app:layout_constraintTop_toBottomOf="@+id/lay_info_air_info" />
+                        app:layout_constraintTop_toBottomOf="@+id/lay_info_air_info">
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="城市"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_20" />
+
+                        <ImageView
+                            android:id="@+id/iv_location_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:src="@drawable/ic_location_white"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <!--App名称-->
+
                 <TextView
                     android:id="@+id/tv_app_name"
                     android:layout_width="wrap_content"
