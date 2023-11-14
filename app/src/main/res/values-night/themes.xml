@@ -37,4 +37,9 @@
         <attr name="round_start_angle" format="float" />
     </declare-styleable>
 
+    <style name="AnimationCenterFade"><!--中间-->
+        <item name="android:windowEnterAnimation">@anim/window_show_anim</item>
+        <item name="android:windowExitAnimation">@anim/window_hidden_anim</item>
+    </style>
+
 </resources>

@@ -21,7 +21,6 @@ public class DialogShowStyle {
     private PopupWindow mPopupWindow;
     private LayoutInflater inflater;
     private Context mContext;
-    private View mView;
 
     public DialogShowStyle(Context context) {
         this.mContext = context;

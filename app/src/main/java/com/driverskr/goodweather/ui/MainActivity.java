@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
 import com.driverskr.goodweather.Constant;
 import com.driverskr.goodweather.R;
 import com.driverskr.goodweather.databinding.DialogDailyDetailBinding;
@@ -32,14 +31,12 @@ import com.driverskr.goodweather.db.bean.HourlyResponse;
 import com.driverskr.goodweather.location.GoodLocation;
 import com.driverskr.goodweather.ui.adapter.DailyAdapter;
 import com.driverskr.goodweather.ui.adapter.HourlyAdapter;
-import com.driverskr.goodweather.ui.adapter.LifestyleAdapter;
 import com.driverskr.goodweather.db.bean.DailyResponse;
 import com.driverskr.goodweather.db.bean.LifestyleResponse;
 import com.driverskr.goodweather.db.bean.NowResponse;
 import com.driverskr.goodweather.db.bean.SearchCityResponse;
 import com.driverskr.goodweather.databinding.ActivityMainBinding;
 import com.driverskr.goodweather.location.LocationCallback;
-import com.driverskr.goodweather.ui.adapter.OnClickItemCallback;
 import com.driverskr.goodweather.utils.CityDialog;
 import com.driverskr.goodweather.utils.DialogShowStyle;
 import com.driverskr.goodweather.utils.EasyDate;
@@ -69,10 +66,6 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     //天气预报数据和适配器
     private final List<DailyResponse.DailyBean> dailyBeanList = new ArrayList<>();
     private final DailyAdapter dailyAdapter = new DailyAdapter(dailyBeanList);
-
-    //生活指数数据和适配器
-    private final List<LifestyleResponse.DailyBean> lifestyleList = new ArrayList<>();
-    private final LifestyleAdapter lifestyleAdapter = new LifestyleAdapter(lifestyleList);
 
     //逐小时天气预报数据和适配器
     private final List<HourlyResponse.HourlyBean> hourlyBeanList = new ArrayList<>();
@@ -246,7 +239,6 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
                     //精简更新时间
                     String time = EasyDate.updateTime(nowResponse.getUpdateTime());
                     binding.tvUpdateTime.setText(String.format("最近更新时间：%s%s", EasyDate.showTimeInfo(time), time));
-                    //binding.tvUpdateTime.setText("最近更新时间：" + EasyDate.greenwichupToSimpleTime(nowResponse.getUpdateTime()));
 
                     binding.tvWindDirection.setText(String.format("风向     %s", now.getWindDir()));//风向
                     binding.tvWindPower.setText(String.format("风力     %s级", now.getWindScale()));//风力
@@ -387,7 +379,8 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         //显示加载弹窗
         showLoadingDialog();
 
-        double latitude = bdLocation.getLatitude(); //获取纬度信息
+        /*获取各种定位信息**/
+        /*double latitude = bdLocation.getLatitude(); //获取纬度信息
         double longitude = bdLocation.getLongitude();   //获取经度信息
         float radius = bdLocation.getRadius();  //获取定位精度，默认值为0.0f
         String coorType = bdLocation.getCoorType();
@@ -398,9 +391,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         String country = bdLocation.getCountry();   //获取国家
         String province = bdLocation.getProvince(); //获取省份
         String city = bdLocation.getCity();     //获取城市
-        String district = bdLocation.getDistrict();     //获取区县
         String street = bdLocation.getStreet();     //获取街道信息
-        String locationDescribe = bdLocation.getLocationDescribe(); //获取位置描述信息
+        String locationDescribe = bdLocation.getLocationDescribe(); //获取位置描述信息*/
+
+        String district = bdLocation.getDistrict();     //获取区县
 
         if (viewModel != null && district != null) {
             mCityName = district; //定位后重新赋值
@@ -566,30 +560,14 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         binding.liveIndex.comfortText.setText(lifestyleList.get(7).getCategory());
 
         //绑定点击事件
-        binding.liveIndex.rlSport.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(0));
-        });
-        binding.liveIndex.rlCarWashing.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(1));
-        });
-        binding.liveIndex.rlDressing.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(2));
-        });
-        binding.liveIndex.rlFishing.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(3));
-        });
-        binding.liveIndex.rlUltraviolet.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(4));
-        });
-        binding.liveIndex.rlTour.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(5));
-        });
-        binding.liveIndex.rlColdRisk.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(8));
-        });
-        binding.liveIndex.rlComfort.setOnClickListener(v -> {
-            onClickLifeItem(lifestyleList.get(7));
-        });
+        binding.liveIndex.rlSport.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(0)));
+        binding.liveIndex.rlCarWashing.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(1)));
+        binding.liveIndex.rlDressing.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(2)));
+        binding.liveIndex.rlFishing.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(3)));
+        binding.liveIndex.rlUltraviolet.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(4)));
+        binding.liveIndex.rlTour.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(5)));
+        binding.liveIndex.rlColdRisk.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(8)));
+        binding.liveIndex.rlComfort.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(7)));
     }
 
     private void onClickLifeItem(LifestyleResponse.DailyBean dailyBean){
