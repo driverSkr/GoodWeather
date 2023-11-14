@@ -4,11 +4,18 @@
     android:background="@drawable/shape_white_5"
     android:padding="@dimen/dp_12"
     android:layout_width="250dp"
-    android:layout_height="350dp">
+    android:layout_height="220dp">
+
+    <ImageView
+        android:id="@+id/img_content"
+        android:layout_gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/img_sport"/>
 
     <TextView
         android:id="@+id/tv_title"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/sp_16"
         android:textStyle="bold"
@@ -16,129 +23,23 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40" />
 
-    <!--时间-->
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:text="时间"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_time"
-            android:textColor="@color/black"
-            android:text="2023-11-13"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!--类型-->
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:text="类型"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_type"
-            android:textColor="@color/black"
-            android:text="1"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!--名称-->
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:text="名称"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_name"
-            android:textColor="@color/black"
-            android:text="运动指数"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!--等级-->
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:text="等级"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_level"
-            android:textColor="@color/black"
-            android:text="2"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
     <!--种类-->
-    <LinearLayout
-        android:gravity="center_vertical"
+    <TextView
+        android:id="@+id/tv_kind"
+        android:textColor="@color/blue"
+        android:text="较适宜"
+        android:textSize="@dimen/sp_18"
+        android:gravity="center"
+        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:text="种类"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_kind"
-            android:textColor="@color/black"
-            android:text="较适宜"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 
     <!--文本-->
-    <LinearLayout
-        android:gravity="center_vertical"
+    <TextView
+        android:id="@+id/tv_text"
+        android:textColor="@color/black"
+        android:text="天气较好，但因风力稍强，户外可选择对风力要求不高的运动，推荐您进行室内运动。"
+        android:layout_marginTop="@dimen/dp_16"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3">
-        <TextView
-            android:text="文本"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_text"
-            android:textColor="@color/black"
-            android:text="天气较好，但因风力稍强，户外可选择对风力要求不高的运动，推荐您进行室内运动。"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

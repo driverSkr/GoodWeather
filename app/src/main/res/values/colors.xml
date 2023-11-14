@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_bg">#33FFFFFF</color>
     <color name="yellow">#FFD600</color>
+    <color name="blue">#007FD4</color>
 
     <color name="temp_min_tx">#B3BCCA</color><!--低温文字颜色-->
     <color name="line_color">#EEEEEE</color>

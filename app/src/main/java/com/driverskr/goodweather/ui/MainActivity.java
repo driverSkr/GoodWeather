@@ -572,15 +572,39 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
 
     private void onClickLifeItem(LifestyleResponse.DailyBean dailyBean){
         DialogShowStyle dialogShowStyle = new DialogShowStyle(mContext);
+
         DialogLifeIndexDetailBinding binding = DialogLifeIndexDetailBinding.inflate(LayoutInflater.from(mContext));
         binding.tvTitle.setText(dailyBean.getName());
-        binding.tvTime.setText(dailyBean.getDate());
-        binding.tvType.setText(dailyBean.getType());
-        binding.tvName.setText(dailyBean.getName());
-        binding.tvLevel.setText(dailyBean.getLevel());
         binding.tvKind.setText(dailyBean.getCategory());
         binding.tvText.setText(dailyBean.getText());
 
-        dialogShowStyle.showCenterPopupWindow(binding.getRoot(), SizeUtils.dp2px(mContext, 300), SizeUtils.dp2px(mContext, 400), true);
+        switch (dailyBean.getType()){
+            case "2":
+                binding.imgContent.setImageResource(R.drawable.img_car_washing);
+                break;
+            case "3":
+                binding.imgContent.setImageResource(R.drawable.img_dressing);
+                break;
+            case "4":
+                binding.imgContent.setImageResource(R.drawable.img_fishing);
+                break;
+            case "5":
+                binding.imgContent.setImageResource(R.drawable.img_ultraviolet);
+                break;
+            case "6":
+                binding.imgContent.setImageResource(R.drawable.img_tour);
+                break;
+            case "8":
+                binding.imgContent.setImageResource(R.drawable.img_comfort);
+                break;
+            case "9":
+                binding.imgContent.setImageResource(R.drawable.img_cold_risk);
+                break;
+            default:
+                binding.imgContent.setImageResource(R.drawable.img_sport);
+                break;
+        }
+
+        dialogShowStyle.showCenterPopupWindow(binding.getRoot(), SizeUtils.dp2px(mContext, 250), SizeUtils.dp2px(mContext, 220), true);
     }
 }

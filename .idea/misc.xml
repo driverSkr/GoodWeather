@@ -22,6 +22,7 @@
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/shape_white_5.xml" value="0.1555" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/window_hidden_anim.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/drawable/window_show_anim.xml" value="0.1" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_back_ground_manager.xml" value="0.22447916666666667" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_main.xml" value="0.26438188494492043" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_manage_city.xml" value="0.18596491228070175" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/activity_splash.xml" value="0.22447916666666667" />
@@ -29,7 +30,7 @@
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_city.xml" value="0.225" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_daily_detail.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_hourly_detail.xml" value="0.12323943661971831" />
-        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_life_index_detail.xml" value="0.4" />
+        <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/dialog_life_index_detail.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_daily_rv.xml" value="0.264" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_hourly_rv.xml" value="0.1" />
         <entry key="..\:/androidProject/boGeStudyDemo/GoodWeather/app/src/main/res/layout/item_lifestyle_rv.xml" value="0.2" />
