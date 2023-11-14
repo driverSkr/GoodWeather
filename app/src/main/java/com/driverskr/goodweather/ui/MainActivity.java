@@ -546,7 +546,7 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
     }
 
     /**
-     * 生活建议数据填充
+     * ”生活建议“数据填充
      * @param lifestyleList 数据包
      */
     private void initLifeIndex(List<LifestyleResponse.DailyBean> lifestyleList){
@@ -570,6 +570,10 @@ public class MainActivity extends NetworkActivity<ActivityMainBinding> implement
         binding.liveIndex.rlComfort.setOnClickListener(v -> onClickLifeItem(lifestyleList.get(7)));
     }
 
+    /**
+     * 对"生活指数“弹窗的数据填充
+     * @param dailyBean 数据源
+     */
     private void onClickLifeItem(LifestyleResponse.DailyBean dailyBean){
         DialogShowStyle dialogShowStyle = new DialogShowStyle(mContext);
 
